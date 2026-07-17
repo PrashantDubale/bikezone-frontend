@@ -13,7 +13,7 @@ export const useBikeStore = defineStore('bike', () => {
   const selectedCategory = ref('')
   const priceRange = ref([0, 2500000])
 
-  const API_BASE = 'http://localhost:8000/api'
+  const API_BASE = import.meta.env.VITE_API_BASE
 
   const fetchBikes = async () => {
     loading.value = true

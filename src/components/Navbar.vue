@@ -3,7 +3,7 @@
     <div class="container-custom">
       <div class="nav-content">
         <router-link to="/" class="logo-section">
-          <img src="http://localhost:8000/api/assets/logo" alt="BikeZone" class="logo-image" />
+          <img :src="logoUrl" alt="BikeZone" class="logo-image" />
         </router-link>
 
         <div class="nav-links">
@@ -53,6 +53,7 @@ const bikeStore = useBikeStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
+const logoUrl = `${import.meta.env.VITE_API_BASE}/assets/logo`
 const showLogoutModal = ref(false)
 
 const confirmLogout = () => {
