@@ -7,3 +7,4 @@ Git commands
       git commit -m 
       git push
       git checkout -b branch-name
+      git merge branch-name
