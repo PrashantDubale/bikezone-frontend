@@ -41,10 +41,37 @@
         </div>
       </div>
 
+      <!-- Mobile / tablet filter toggle -->
+      <button
+        type="button"
+        class="mobile-filter-toggle"
+        @click="mobileFiltersOpen = true"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Filters
+      </button>
+
       <div class="content-wrapper">
-        <aside class="sidebar">
+        <aside class="sidebar" :class="{ 'sidebar-open': mobileFiltersOpen }">
+          <div class="sidebar-mobile-header">
+            <span>Filters</span>
+            <button type="button" class="sidebar-close" @click="mobileFiltersOpen = false" aria-label="Close filters">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
           <FilterPanel />
         </aside>
+
+        <!-- Backdrop for mobile filter drawer -->
+        <div
+          v-if="mobileFiltersOpen"
+          class="sidebar-backdrop"
+          @click="mobileFiltersOpen = false"
+        ></div>
 
         <main class="bikes-container">
           <div v-if="bikeStore.loading" class="loading">
@@ -71,7 +98,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useBikeStore } from '../stores/bikeStore'
 import BikeCard from '../components/BikeCard.vue'
 import FilterPanel from '../components/FilterPanel.vue'
@@ -80,6 +107,7 @@ const bikeStore = useBikeStore()
 const sortBy = ref('price')
 const sortMenuOpen = ref(false)
 const sortControlRef = ref(null)
+const mobileFiltersOpen = ref(false)
 
 const sortOptions = [
   { value: 'price', label: 'Price' },
@@ -101,8 +129,16 @@ const handleClickOutside = (event) => {
   }
 }
 
+// Prevent background scroll when mobile filter drawer is open
+watch(mobileFiltersOpen, (isOpen) => {
+  document.body.style.overflow = isOpen ? 'hidden' : ''
+})
+
 onMounted(() => document.addEventListener('click', handleClickOutside))
-onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+  document.body.style.overflow = ''
+})
 
 const sortedBikes = computed(() => {
   const items = [...bikeStore.filterBikes]
@@ -136,6 +172,11 @@ const sortedBikes = computed(() => {
   background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
 }
 
+.container-custom {
+  width: 100%;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -146,10 +187,11 @@ const sortedBikes = computed(() => {
   border-radius: 24px;
   background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(255, 107, 53, 0.08));
   border: 1px solid rgba(79, 70, 229, 0.12);
+  flex-wrap: wrap;
 }
 
 .header-copy h1 {
-  font-size: 2.15rem;
+  font-size: clamp(1.5rem, 3.5vw, 2.15rem);
   font-weight: 800;
   margin: 0.2rem 0 0.4rem;
   color: var(--text-primary);
@@ -189,6 +231,7 @@ const sortedBikes = computed(() => {
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
   font-weight: 700;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 /* ---------- Custom sort dropdown ---------- */
@@ -290,6 +333,35 @@ const sortedBikes = computed(() => {
   transform: translateY(-6px);
 }
 
+/* ---------- Mobile filter toggle (hidden on desktop) ---------- */
+.mobile-filter-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  background: white;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.sidebar-mobile-header {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ---------- Layout ---------- */
 .content-wrapper {
   display: grid;
   grid-template-columns: 290px 1fr;
@@ -299,7 +371,7 @@ const sortedBikes = computed(() => {
 .sidebar {
   position: sticky;
   top: 100px;
-  height: fit-content;
+  align-self: start;
 }
 
 .bikes-container {
@@ -337,33 +409,159 @@ const sortedBikes = computed(() => {
   margin: 0;
 }
 
-@media (max-width: 1024px) {
+/* ================= RESPONSIVE BREAKPOINTS ================= */
+
+/* ---------- Small laptops / large tablets landscape ---------- */
+@media (max-width: 1200px) {
   .content-wrapper {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: static;
-  }
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .header-copy h1 {
-    font-size: 1.8rem;
+    grid-template-columns: 260px 1fr;
+    gap: 1.25rem;
   }
 
   .bikes-grid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
+}
+
+/* ---------- Tablets (portrait) ---------- */
+@media (max-width: 1024px) {
+  .mobile-filter-toggle {
+    display: flex;
+  }
+
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: min(320px, 85vw);
+    max-height: none;
+    margin: 0;
+    background: #fff;
+    z-index: 200;
+    padding: 1.25rem;
+    border-radius: 0;
+    box-shadow: -12px 0 40px rgba(15, 23, 42, 0.18);
+    transition: right 0.28s ease;
+    overflow-y: auto;
+  }
+
+  .sidebar-open {
+    right: 0;
+  }
+
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  .sidebar-close {
+    background: rgba(148, 163, 184, 0.12);
+    border: none;
+    border-radius: 999px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 150;
+  }
+
+  .bikes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+/* ---------- Large phones / small tablets ---------- */
+@media (max-width: 768px) {
+  .bikes-list-page {
+    padding: 1.5rem 0 2.5rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.85rem;
+  }
+
+  .header-meta {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sort-control {
+    flex: 1;
+  }
+
+  .sort-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
 
   .sort-menu {
     left: 0;
-    right: auto;
+    right: 0;
+    width: 100%;
+  }
+
+  .bikes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 480px) {
+  .container-custom {
+    padding-inline: 0.85rem;
+  }
+
+  .header-copy h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-copy p {
+    font-size: 0.88rem;
+  }
+
+  .results-pill {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .sidebar {
+    width: 100vw;
+  }
+
+  .bikes-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .loading,
+  .no-results {
+    padding: 2.5rem 1.25rem;
   }
 }
 </style>

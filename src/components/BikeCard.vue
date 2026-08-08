@@ -3,7 +3,7 @@
     <div class="card-image-container">
       <img :src="bike.image" :alt="bike.name" class="card-image" loading="lazy" decoding="async" />
       <div class="image-overlay"></div>
-      <span class="bike-category">{{ bike.category }}</span>
+
       <span v-if="bike.is_new" class="new-badge">New Arrival</span>
       <button class="favorite-btn" @click="toggleFavorite">
         <span v-if="!isFavorited">🤍</span>
@@ -16,6 +16,9 @@
         <div>
           <p class="bike-brand">{{ bike.brand }}</p>
           <h3 class="bike-name">{{ bike.name }}</h3>
+          <div class="category-tags">
+            <span v-for="cat in categoryParts" :key="cat" class="category-tag">{{ cat }}</span>
+          </div>
         </div>
       </div>
 
@@ -41,7 +44,7 @@
       <div class="card-footer">
         <div class="price-section">
           <p class="price-label">Starting from</p>
-          <p class="price">₹{{ formatPrice(bike.price) }}</p>
+          <p class="price">₹{{ formatPrice(bike.price) }}L</p>
         </div>
 
         <div class="action-buttons">
@@ -58,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useBikeStore } from '../stores/bikeStore'
 import { useRouter } from 'vue-router'
 
@@ -72,6 +75,15 @@ const props = defineProps({
 const isFavorited = ref(false)
 const bikeStore = useBikeStore()
 const router = useRouter()
+
+// Splits "Naked/Sport" into ["Naked", "Sport"] for separate tag display.
+const categoryParts = computed(() => {
+  if (!props.bike.category) return []
+  return props.bike.category
+    .split('/')
+    .map((part) => part.trim())
+    .filter(Boolean)
+})
 
 const toggleFavorite = () => {
   isFavorited.value = !isFavorited.value
@@ -137,23 +149,9 @@ const formatPrice = (price) => {
   transform: scale(1.04);
 }
 
-.bike-category {
-  position: absolute;
-  top: 0.8rem;
-  left: 0.8rem;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--primary-color);
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  z-index: 2;
-}
-
 .new-badge {
   position: absolute;
-  top: 2.55rem;
+  top: 0.8rem;
   left: 0.8rem;
   background: linear-gradient(135deg, var(--accent-color), #ff7b3d);
   color: white;
@@ -220,6 +218,24 @@ const formatPrice = (price) => {
   color: var(--text-primary);
   margin: 0.25rem 0 0;
   line-height: 1.2;
+}
+
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+}
+
+.category-tag {
+  background: rgba(79, 70, 229, 0.08);
+  color: var(--primary-color);
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .specs-row {
@@ -319,4 +335,4 @@ const formatPrice = (price) => {
   background-color: rgba(79, 70, 229, 0.06);
   transform: translateY(-2px);
 }
-</style>
+</style>  

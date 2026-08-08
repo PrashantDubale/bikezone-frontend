@@ -3,7 +3,8 @@
     <div class="container-custom">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>BikeZone</h3>
+          <img :src="`/assets/bikezone-crop.png`" alt="BikeZone" class="footer-logo" />
+          <!-- <h3>BikeZone</h3> -->
           <p>Your premium motorcycle discovery platform for comparing, choosing, and understanding the next ride.</p>
         </div>
 
@@ -49,6 +50,7 @@
 
 <style scoped>
 .footer { background: #111827; color: white; padding: 3rem 0 1.4rem; margin-top: 4.5rem; }
+.footer-logo { width: 250px; margin-bottom: 0.8rem; }
 .footer-content { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:2rem; margin-bottom:2rem; }
 .footer-section h3 { font-size: 1.25rem; margin:0 0 0.6rem; color: var(--accent-color); }
 .footer-section h4 { font-size: 0.95rem; margin:0 0 0.75rem; font-weight: 700; }

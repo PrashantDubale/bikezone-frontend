@@ -16,8 +16,8 @@
             </div>
 
             <div class="hero-highlights">
-              <span class="highlight-pill">Price focused</span>
-              <span class="highlight-pill">Power packed</span>
+              <span class="highlight-pill">Price focused </span>/
+              <span class="highlight-pill">Power packed </span>/
               <span class="highlight-pill">Mileage smart</span>
             </div>
           </div>
@@ -248,7 +248,7 @@ const formatPrice = (price) => {
 .hero-section {
   background: linear-gradient(135deg, #111827 0%, #1f2937 45%, #4f46e5 100%);
   color: white;
-  padding: 4rem 0 5rem;
+  padding: 2.5rem 0 3rem;
   position: relative;
   overflow: hidden;
 }
@@ -263,8 +263,8 @@ const formatPrice = (price) => {
 
 .hero-content {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 2rem;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 0.8rem;
   align-items: center;
   position: relative;
   z-index: 1;
@@ -273,7 +273,7 @@ const formatPrice = (price) => {
 .hero-copy h1 {
   font-size: clamp(2.1rem, 4vw, 3.2rem);
   line-height: 1.05;
-  margin: 0.3rem 0 1rem;
+  margin: 0.2rem 0 0.7rem;
   font-weight: 800;
 }
 
@@ -291,14 +291,14 @@ const formatPrice = (price) => {
   color: #e5e7eb;
   max-width: 56ch;
   line-height: 1.7;
-  margin: 0 0 1.4rem;
+  margin: 0 0 0.9rem;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 }
 
 .btn-primary,
@@ -339,11 +339,9 @@ const formatPrice = (price) => {
 }
 
 .highlight-pill {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.16);
-  padding: 0.45rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.84rem;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1rem;
   color: #f3f4f6;
 }
 
@@ -368,7 +366,7 @@ const formatPrice = (price) => {
 }
 
 .hero-card-body {
-  padding: 1.4rem 1.4rem 1.5rem;
+  padding: 1rem 1.1rem 1.2rem;
 }
 
 .hero-card-kicker {
@@ -396,8 +394,8 @@ const formatPrice = (price) => {
 .hero-card-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-bottom: 1.1rem;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
 }
 
 .hero-card-stats div {
@@ -438,14 +436,14 @@ const formatPrice = (price) => {
 }
 
 .search-section {
-  padding: 2.3rem 0 2rem;
+  padding: 1.6rem 0 1.4rem;
   background: linear-gradient(180deg, #f8fafc 0%, #f2f5f9 100%);
 }
 
 .search-shell {
   background: white;
   border-radius: 24px;
-  padding: 1.2rem;
+  padding: 1rem;
   box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
 }
 
@@ -498,7 +496,7 @@ const formatPrice = (price) => {
 
 .featured-section,
 .reviews-section {
-  padding: 2.2rem 0 0;
+  padding: 1.5rem 0 0;
 }
 
 .section-header {
@@ -506,7 +504,7 @@ const formatPrice = (price) => {
   justify-content: space-between;
   align-items: end;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 }
 
 .section-header h2 {
@@ -524,11 +522,11 @@ const formatPrice = (price) => {
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .benefits-section {
-  padding: 2rem 0 0;
+  padding: 1.4rem 0 0;
 }
 
 .benefits-grid {
@@ -600,7 +598,7 @@ const formatPrice = (price) => {
 }
 
 .cta-section {
-  padding: 2.2rem 0 3rem;
+  padding: 1.6rem 0 2rem;
 }
 
 .cta-content {
@@ -630,7 +628,7 @@ const formatPrice = (price) => {
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 2.8rem 0 3rem;
+    padding: 1.8rem 0 2.2rem;
   }
 
   .hero-actions,
@@ -653,4 +651,4 @@ const formatPrice = (price) => {
     align-items: flex-start;
   }
 }
-</style>
+</style>  
