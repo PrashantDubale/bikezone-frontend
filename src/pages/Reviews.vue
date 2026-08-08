@@ -63,6 +63,7 @@
 
       <!-- ============ Rating distribution strip ============ -->
       <div class="distribution">
+        <h4 class="distribution-title">Rating breakdown</h4>
         <div
           class="distribution-row"
           v-for="bucket in ratingBuckets"
@@ -497,18 +498,29 @@ const ratingBuckets = computed(() => {
   background: white;
   border-radius: 18px;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  padding: 1.35rem 1.5rem;
-  margin-bottom: 1.75rem;
+  padding: 1.5rem 1.75rem 1.65rem;
+  margin: 0 auto 1.75rem;
+  max-width: 560px;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.85rem;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+}
+
+.distribution-title {
+  margin: 0 0 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
 }
 
 .distribution-row {
   display: grid;
   grid-template-columns: 2.1rem 1fr 1.6rem;
   align-items: center;
-  gap: 1rem;
+  gap: 0.9rem;
 }
 
 .distribution-label {
@@ -528,7 +540,7 @@ const ratingBuckets = computed(() => {
 }
 
 .distribution-track {
-  height: 6px;
+  height: 8px;
   border-radius: 999px;
   background: rgba(148, 163, 184, 0.14);
   overflow: hidden;
@@ -759,6 +771,11 @@ const ratingBuckets = computed(() => {
 
   .cluster {
     padding: 1.4rem 1.25rem 1.25rem;
+  }
+
+  .distribution {
+    max-width: none;
+    padding: 1.25rem 1.25rem 1.4rem;
   }
 
   .review-top {
