@@ -6,7 +6,10 @@
         <div class="hero-copy">
           <p class="eyebrow">Owner insights</p>
           <h1>Rider reviews</h1>
-          <p class="lede">Real feedback from riders who rely on these machines every day — the good, the tiring, and the unglamorous truth about ownership.</p>
+          <p class="lede">
+            Real feedback from riders who rely on these machines every day — the
+            good, the tiring, and the unglamorous truth about ownership.
+          </p>
         </div>
 
         <div class="cluster" role="img" aria-label="Average rating gauge">
@@ -18,6 +21,12 @@
               stroke-width="12"
               stroke-linecap="round"
             />
+            <g
+              class="gauge-needle"
+              :style="{ transform: `rotate(${needleAngle}deg)` }"
+            >
+              <line x1="100" y1="100" x2="100" y2="32" />
+            </g>
             <path
               class="gauge-fill"
               d="M20,100 A80,80 0 0 1 180,100"
@@ -26,9 +35,7 @@
               stroke-linecap="round"
               :style="{ strokeDasharray: 251.3, strokeDashoffset: gaugeOffset }"
             />
-            <g class="gauge-needle" :style="{ transform: `rotate(${needleAngle}deg)` }">
-              <line x1="100" y1="100" x2="100" y2="32" />
-            </g>
+
             <circle class="gauge-pivot" cx="100" cy="100" r="6" />
           </svg>
           <div class="cluster-readout">
@@ -38,12 +45,16 @@
 
           <div class="cluster-digits">
             <div class="digit-block">
-              <span class="digit-value">{{ String(allReviews.length).padStart(2, '0') }}</span>
+              <span class="digit-value">{{
+                String(allReviews.length).padStart(2, "0")
+              }}</span>
               <span class="digit-label">Reviews logged</span>
             </div>
             <div class="digit-divider"></div>
             <div class="digit-block">
-              <span class="digit-value">{{ String(totalBikes).padStart(2, '0') }}</span>
+              <span class="digit-value">{{
+                String(totalBikes).padStart(2, "0")
+              }}</span>
               <span class="digit-label">Bikes covered</span>
             </div>
           </div>
@@ -52,10 +63,17 @@
 
       <!-- ============ Rating distribution strip ============ -->
       <div class="distribution">
-        <div class="distribution-row" v-for="bucket in ratingBuckets" :key="bucket.stars">
+        <div
+          class="distribution-row"
+          v-for="bucket in ratingBuckets"
+          :key="bucket.stars"
+        >
           <span class="distribution-label">{{ bucket.stars }}</span>
           <div class="distribution-track">
-            <div class="distribution-fill" :style="{ width: bucket.percent + '%' }"></div>
+            <div
+              class="distribution-fill"
+              :style="{ width: bucket.percent + '%' }"
+            ></div>
           </div>
           <span class="distribution-count">{{ bucket.count }}</span>
         </div>
@@ -63,9 +81,15 @@
 
       <!-- ============ Review list ============ -->
       <div class="reviews-list">
-        <article class="review-card" v-for="review in allReviews" :key="review.id">
+        <article
+          class="review-card"
+          v-for="review in allReviews"
+          :key="review.id"
+        >
           <div class="review-top">
-            <div class="avatar" aria-hidden="true">{{ initials(review.user) }}</div>
+            <div class="avatar" aria-hidden="true">
+              {{ initials(review.user) }}
+            </div>
 
             <div class="review-heading">
               <h3 class="review-title">{{ review.title }}</h3>
@@ -76,13 +100,17 @@
               </p>
             </div>
 
-            <div class="star-row" :aria-label="`${review.rating} out of 5 stars`">
+            <div
+              class="star-row"
+              :aria-label="`${review.rating} out of 5 stars`"
+            >
               <span
                 v-for="n in 5"
                 :key="n"
                 class="star"
                 :style="{ '--fill': starFill(review.rating, n) + '%' }"
-              >★</span>
+                >★</span
+              >
             </div>
           </div>
 
@@ -114,145 +142,178 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
 const allReviews = ref([
   {
     id: 1,
-    title: 'Perfect daily commuter',
+    title: "Perfect daily commuter",
     rating: 4.5,
-    bike: 'Royal Enfield Classic 350',
-    user: 'Rajesh Kumar',
-    comment: 'This bike is absolutely fantastic for daily commuting. Great fuel efficiency, comfortable riding position, and very reliable. Perfect for Indian roads.',
-    pros: ['Excellent mileage', 'Comfortable seat', 'Great resale value', 'Easy maintenance'],
-    cons: ['Heavy', 'Limited features']
+    bike: "Royal Enfield Classic 350",
+    user: "Rajesh Kumar",
+    comment:
+      "This bike is absolutely fantastic for daily commuting. Great fuel efficiency, comfortable riding position, and very reliable. Perfect for Indian roads.",
+    pros: [
+      "Excellent mileage",
+      "Comfortable seat",
+      "Great resale value",
+      "Easy maintenance",
+    ],
+    cons: ["Heavy", "Limited features"],
   },
   {
     id: 2,
-    title: 'Best performance bike',
+    title: "Best performance bike",
     rating: 5,
-    bike: 'KTM 390 Duke',
-    user: 'Priya Sharma',
-    comment: 'Amazing bike for enthusiasts! Responsive handling, great power delivery, and looks stunning. The ride quality is superb on highways.',
-    pros: ['Powerful engine', 'Excellent handling', 'Modern styling', 'Great braking'],
-    cons: ['Expensive maintenance', 'Stiff suspension']
+    bike: "KTM 390 Duke",
+    user: "Priya Sharma",
+    comment:
+      "Amazing bike for enthusiasts! Responsive handling, great power delivery, and looks stunning. The ride quality is superb on highways.",
+    pros: [
+      "Powerful engine",
+      "Excellent handling",
+      "Modern styling",
+      "Great braking",
+    ],
+    cons: ["Expensive maintenance", "Stiff suspension"],
   },
   {
     id: 3,
-    title: 'Reliable workhorse',
+    title: "Reliable workhorse",
     rating: 4,
-    bike: 'Honda CB Shine',
-    user: 'Vikram Desai',
-    comment: 'Solid bike for everyday use. Very reliable, good fuel efficiency, and easy to maintain. Perfect for budget-conscious riders.',
-    pros: ['Reliable', 'Good mileage', 'Affordable', 'Easy spare parts'],
-    cons: ['Basic design', 'Modest power']
+    bike: "Honda CB Shine",
+    user: "Vikram Desai",
+    comment:
+      "Solid bike for everyday use. Very reliable, good fuel efficiency, and easy to maintain. Perfect for budget-conscious riders.",
+    pros: ["Reliable", "Good mileage", "Affordable", "Easy spare parts"],
+    cons: ["Basic design", "Modest power"],
   },
   {
     id: 4,
-    title: 'Smooth and comfortable',
+    title: "Smooth and comfortable",
     rating: 4.5,
-    bike: 'Yamaha FZ-X',
-    user: 'Anjali Menon',
-    comment: 'Versatile bike that handles both city and highway riding well. Smooth engine, good ground clearance, and comfortable for long rides.',
-    pros: ['Versatile', 'Smooth engine', 'Good ground clearance', 'Comfortable'],
-    cons: ['Average power', 'Basic features']
+    bike: "Yamaha FZ-X",
+    user: "Anjali Menon",
+    comment:
+      "Versatile bike that handles both city and highway riding well. Smooth engine, good ground clearance, and comfortable for long rides.",
+    pros: [
+      "Versatile",
+      "Smooth engine",
+      "Good ground clearance",
+      "Comfortable",
+    ],
+    cons: ["Average power", "Basic features"],
   },
   {
     id: 5,
-    title: 'Adventure bike extraordinaire',
+    title: "Adventure bike extraordinaire",
     rating: 5,
-    bike: 'TVS Apache RTR 200',
-    user: 'Sanjay Patel',
-    comment: 'Excellent adventure capability with great off-road performance. Comfortable for long distance touring and perfect for exploring new trails.',
-    pros: ['Great off-road capability', 'Comfortable for touring', 'Good power', 'Durable'],
-    cons: ['Can be expensive to service']
+    bike: "TVS Apache RTR 200",
+    user: "Sanjay Patel",
+    comment:
+      "Excellent adventure capability with great off-road performance. Comfortable for long distance touring and perfect for exploring new trails.",
+    pros: [
+      "Great off-road capability",
+      "Comfortable for touring",
+      "Good power",
+      "Durable",
+    ],
+    cons: ["Can be expensive to service"],
   },
   {
     id: 6,
-    title: 'Budget-friendly option',
+    title: "Budget-friendly option",
     rating: 4,
-    bike: 'Bajaj Pulsar 150',
-    user: 'Mohit Singh',
-    comment: 'Great value for money bike. Good performance, reliable engine, and affordable pricing makes it a perfect choice for new riders.',
-    pros: ['Affordable', 'Good performance', 'Reliable', 'Easy to ride'],
-    cons: ['Average comfort', 'No features']
+    bike: "Bajaj Pulsar 150",
+    user: "Mohit Singh",
+    comment:
+      "Great value for money bike. Good performance, reliable engine, and affordable pricing makes it a perfect choice for new riders.",
+    pros: ["Affordable", "Good performance", "Reliable", "Easy to ride"],
+    cons: ["Average comfort", "No features"],
   },
   {
     id: 7,
-    title: 'Premium cruiser feel',
+    title: "Premium cruiser feel",
     rating: 4.5,
-    bike: 'Triumph Street Twin',
-    user: 'Neha Gupta',
-    comment: 'Fantastic premium bike with classic styling. Excellent build quality, smooth riding experience, and heads turn everywhere!',
-    pros: ['Premium feel', 'Smooth engine', 'Classic design', 'Quality build'],
-    cons: ['Expensive', 'High maintenance cost']
+    bike: "Triumph Street Twin",
+    user: "Neha Gupta",
+    comment:
+      "Fantastic premium bike with classic styling. Excellent build quality, smooth riding experience, and heads turn everywhere!",
+    pros: ["Premium feel", "Smooth engine", "Classic design", "Quality build"],
+    cons: ["Expensive", "High maintenance cost"],
   },
   {
     id: 8,
-    title: 'Performance king',
+    title: "Performance king",
     rating: 5,
-    bike: 'BMW S1000RR',
-    user: 'Ravi Krishnan',
-    comment: 'Absolute beast on track! Incredible power delivery, precision handling, and cutting-edge technology. Not for casual riders!',
-    pros: ['Tremendous power', 'Precision handling', 'Advanced tech', 'Track capable'],
-    cons: ['Expensive', 'Overkill for normal riding']
-  }
-])
+    bike: "BMW S1000RR",
+    user: "Ravi Krishnan",
+    comment:
+      "Absolute beast on track! Incredible power delivery, precision handling, and cutting-edge technology. Not for casual riders!",
+    pros: [
+      "Tremendous power",
+      "Precision handling",
+      "Advanced tech",
+      "Track capable",
+    ],
+    cons: ["Expensive", "Overkill for normal riding"],
+  },
+]);
 
 const averageRating = computed(() => {
-  const sum = allReviews.value.reduce((acc, review) => acc + review.rating, 0)
-  return (sum / allReviews.value.length).toFixed(1)
-})
+  const sum = allReviews.value.reduce((acc, review) => acc + review.rating, 0);
+  return (sum / allReviews.value.length).toFixed(1);
+});
 
 const totalBikes = computed(() => {
-  const uniqueBikes = new Set(allReviews.value.map(r => r.bike))
-  return uniqueBikes.size
-})
+  const uniqueBikes = new Set(allReviews.value.map((r) => r.bike));
+  return uniqueBikes.size;
+});
 
 // Semicircle gauge: 0 rating -> fully offset (empty), 5 rating -> 0 offset (full)
 const gaugeOffset = computed(() => {
-  const pct = Math.min(Number(averageRating.value) / 5, 1)
-  return 251.3 * (1 - pct)
-})
+  const pct = Math.min(Number(averageRating.value) / 5, 1);
+  return 251.3 * (1 - pct);
+});
 
 // Needle sweeps from -90deg (0 rating) to +90deg (5 rating)
 const needleAngle = computed(() => {
-  const pct = Math.min(Number(averageRating.value) / 5, 1)
-  return -90 + pct * 180
-})
+  const pct = Math.min(Number(averageRating.value) / 5, 1);
+  return -90 + pct * 180;
+});
 
 const initials = (name) => {
-  if (!name) return '?'
+  if (!name) return "?";
   return name
-    .split(' ')
+    .split(" ")
     .map((part) => part[0])
     .slice(0, 2)
-    .join('')
-    .toUpperCase()
-}
+    .join("")
+    .toUpperCase();
+};
 
 // Fill percentage for a single star icon, given a decimal rating.
 // e.g. rating 4.5, star #4 -> 100, star #5 -> 50, star #1-3 -> 100
 const starFill = (rating, starIndex) => {
-  const diff = rating - (starIndex - 1)
-  if (diff >= 1) return 100
-  if (diff <= 0) return 0
-  return Math.round(diff * 100)
-}
+  const diff = rating - (starIndex - 1);
+  if (diff >= 1) return 100;
+  if (diff <= 0) return 0;
+  return Math.round(diff * 100);
+};
 
 const ratingBuckets = computed(() => {
-  const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+  const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
   allReviews.value.forEach((r) => {
-    const bucket = Math.min(5, Math.max(1, Math.round(r.rating)))
-    counts[bucket]++
-  })
-  const total = allReviews.value.length || 1
+    const bucket = Math.min(5, Math.max(1, Math.round(r.rating)));
+    counts[bucket]++;
+  });
+  const total = allReviews.value.length || 1;
   return [5, 4, 3, 2, 1].map((stars) => ({
     stars,
     count: counts[stars],
-    percent: Math.round((counts[stars] / total) * 100)
-  }))
-})
+    percent: Math.round((counts[stars] / total) * 100),
+  }));
+});
 </script>
 
 <style scoped>
@@ -316,7 +377,7 @@ const ratingBuckets = computed(() => {
 }
 
 .cluster::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
@@ -346,12 +407,21 @@ const ratingBuckets = computed(() => {
   filter: drop-shadow(0 0 6px rgba(255, 107, 53, 0.55));
 }
 
+/* FIX: transform-origin (and the transition that animates the rotation)
+   must live on the element that actually receives the `rotate()` transform
+   — the <g class="gauge-needle"> — not on its child <line>. Previously the
+   origin was set on `.gauge-needle line`, so the rotated <g> fell back to
+   the default SVG transform origin (0,0) and swung the needle way outside
+   the gauge instead of pivoting around the center pin at (100,100). */
+.gauge-needle {
+  transform-origin: 100px 100px;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 .gauge-needle line {
   stroke: #fff;
   stroke-width: 3;
   stroke-linecap: round;
-  transform-origin: 100px 100px;
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .gauge-pivot {
@@ -367,7 +437,8 @@ const ratingBuckets = computed(() => {
 }
 
 .cluster-value {
-  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  font-family:
+    ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -399,7 +470,8 @@ const ratingBuckets = computed(() => {
 }
 
 .digit-value {
-  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  font-family:
+    ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
   font-size: 1.3rem;
   font-weight: 700;
   color: #fff;
@@ -450,7 +522,7 @@ const ratingBuckets = computed(() => {
 }
 
 .distribution-label::after {
-  content: '★';
+  content: "★";
   color: rgba(148, 163, 184, 0.55);
   font-size: 0.78rem;
 }
@@ -489,7 +561,9 @@ const ratingBuckets = computed(() => {
   border-radius: 18px;
   border: 1px solid rgba(148, 163, 184, 0.18);
   padding: 1.25rem 1.4rem;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .review-card:hover {
@@ -509,7 +583,11 @@ const ratingBuckets = computed(() => {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
   color: white;
   font-weight: 700;
   font-size: 0.85rem;
@@ -560,7 +638,7 @@ const ratingBuckets = computed(() => {
 }
 
 .star::after {
-  content: '★';
+  content: "★";
   position: absolute;
   inset: 0;
   color: var(--accent-color);
@@ -615,7 +693,7 @@ const ratingBuckets = computed(() => {
 }
 
 .pros li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0.5em;
@@ -626,7 +704,7 @@ const ratingBuckets = computed(() => {
 }
 
 .cons li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0.5em;
@@ -652,7 +730,9 @@ const ratingBuckets = computed(() => {
   font-weight: 700;
   font-size: 0.82rem;
   font-family: inherit;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .action-btn:hover {
