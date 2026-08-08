@@ -6,5 +6,6 @@ Git commands
       git add .
       git commit -m "commit-message"
       git push ( only for current branch or git push origin branch-name  )
+      git pull orign branch-name
       git checkout -b branch-name
-      git merge branch-name
+      git merge different-branch-name
