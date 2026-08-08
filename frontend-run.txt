@@ -5,5 +5,5 @@ frontend Run
 Git commands
       git add .
       git commit -m "commit-message"
-      git push
+      git push ( only for current branch or git push origin branch-name  )
       git checkout -b branch-name
