@@ -109,7 +109,7 @@
                 v-for="n in 5"
                 :key="n"
                 class="star"
-                :style="{ '--fill': starFill(review.rating, n) + '%' }"
+                :style="{ '--fill': starFill(review.rating, n) + '%', }"
                 >★</span
               >
             </div>
@@ -535,7 +535,7 @@ const ratingBuckets = computed(() => {
 
 .distribution-label::after {
   content: "★";
-  color: rgba(148, 163, 184, 0.55);
+  color: rgba(236, 144, 16, 0.808);
   font-size: 0.78rem;
 }
 
