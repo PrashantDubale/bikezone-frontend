@@ -1,0 +1,15 @@
+# Save this as .gitignore in bikezone-frontend (replace the existing one)
+
+# Environment variables
+.env
+.env.local
+!.env.example
+!.env.production
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
