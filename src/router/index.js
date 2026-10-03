@@ -7,7 +7,7 @@ const BikeDetail = () => import('../pages/BikeDetail.vue')
 const Compare = () => import('../pages/Compare.vue')
 const Reviews = () => import('../pages/Reviews.vue')
 const Login = () => import('../pages/Login.vue')
-const SignUp = () => import('../pages/SignUp.vue')
+const SignUp = () => import('../pages/Signup.vue')
 const AdminBikes = () => import('../pages/AdminBikes.vue')
 
 const routes = [
